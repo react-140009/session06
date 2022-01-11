@@ -1,0 +1,14 @@
+use* hooks  
+  useState
+  useEffect
+    1. code -> 1st render run
+    2. code -> 1st va dependecyhash tagir mikone
+    3. component remove mishe 
+  useCallback
+  useRef
+  useContext
+
+  HATMAN bayad toye component ya custom React Hook haye react estefade konim
+  Don’t call Hooks inside loops, conditions, or nested functions.
+
+  Custom Hook
