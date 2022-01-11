@@ -1,6 +1,7 @@
 import counterReducer from './../features/counter/counterSlice';
 import todoReducer from './../features/todo/todoSlice';
 import postReducer from './../features/post/postSlice';
+import authReducer from './../features/auth/authSlice';
 import { configureStore } from '@reduxjs/toolkit'
 
 export const store = configureStore({
@@ -8,6 +9,7 @@ export const store = configureStore({
     counter: counterReducer,
     todo: todoReducer,
     post: postReducer,
+    auth: authReducer,
   },
 })
 

@@ -1,20 +1,25 @@
 import { useForm } from "react-hook-form";
 import { Button, Input, Space } from "antd";
+import { useDispatch } from "react-redux";
+import { loginAsync } from "./authSlice";
+/*
+  Auth:
+    server -> session -> cookie
 
+    Token
+      jwt.io
+*/
 export const Login = () => {
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors, isDirty, isValid },
-  } = useForm({ reValidateMode: "onChange" });
+  } = useForm();
 
-  const submit = (data: any) => {
-    console.log(data);
-  };
-
-  const debug = () => {
-    console.log(isValid, errors);
+  const submit = (data: { email: string; password: string }) => {
+    console.log("loginnnnnnnnnnn");
+    dispatch(loginAsync(data));
   };
 
   return (
@@ -23,28 +28,13 @@ export const Login = () => {
         <br />
         <br />
         <form onSubmit={handleSubmit(submit)}>
-          <Space direction="vertical">
-            <input
-              placeholder="email"
-              {...register("email", { required: true })}
-            />
-            <input
-              type={"password"}
-              placeholder="input password"
-              {...register("password", { required: true, minLength: 6 })}
-            />
-            <Button
-              type="primary"
-              onClick={handleSubmit(submit)}
-              disabled={!isValid}
-            >
-              Login
-            </Button>
-
-            {/* <button type="submit" onClick={debug}>
-              Debug
-            </button> */}
-          </Space>
+          <input placeholder="email" {...register("email")} />
+          <input
+            type={"password"}
+            placeholder="input password"
+            {...register("password")}
+          />
+          <button type="submit">Login</button>
         </form>
       </div>
     </div>
