@@ -1,8 +1,9 @@
+import { store } from './store';
 import axios from "axios"
 
 export default axios.create({
   headers: {
-    'token': ''
+    'token': store.getState().auth.token
   },
   baseURL: 'http://localhost:3010/'
 })
