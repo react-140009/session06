@@ -21,6 +21,7 @@ export const loginAsync = createAsyncThunk(
     const response = await axios.post<{token: string}>(
       `http://localhost:3010/auth/login`, data
     );
+    
     return response.data;
   }
 )
@@ -28,7 +29,11 @@ export const loginAsync = createAsyncThunk(
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {        
+  reducers: {
+    logout: (state) => {
+      state.isLoggedin = false;
+      state.token = '';
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(loginAsync.pending, (state) => {
@@ -36,7 +41,7 @@ const authSlice = createSlice({
     });
     builder.addCase(loginAsync.fulfilled, (state, action) => {      
       state.isLoggedin = true;
-      state.token = action.payload.token;      
+      state.token = action.payload.token;          
     });
     builder.addCase(loginAsync.rejected, (state, action) => {
       state.isLoggedin = false;     
@@ -46,6 +51,8 @@ const authSlice = createSlice({
 })
 
 export default authSlice.reducer;
+
+export const { logout } = authSlice.actions;
 
 export const selectIsLoggedin = (state: RootState) => state.auth.isLoggedin;
 export const selectToken = (state: RootState) => state.auth.token;
