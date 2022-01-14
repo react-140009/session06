@@ -2,23 +2,16 @@ import { useForm } from "react-hook-form";
 import { Button, Input, Space } from "antd";
 import { useDispatch } from "react-redux";
 import { loginAsync } from "./authSlice";
-/*
-  Auth:
-    server -> session -> cookie
-
-    Token
-      jwt.io
-*/
+import { LoginModel } from "./LoginModel";
 export const Login = () => {
   const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid },
-  } = useForm();
+  } = useForm<LoginModel>({ mode: "all" });
 
-  const submit = (data: { email: string; password: string }) => {
-    console.log("loginnnnnnnnnnn");
+  const submit = (data: LoginModel) => {
     dispatch(loginAsync(data));
   };
 
@@ -28,13 +21,21 @@ export const Login = () => {
         <br />
         <br />
         <form onSubmit={handleSubmit(submit)}>
-          <input placeholder="email" {...register("email")} />
+          <input
+            placeholder="email"
+            {...register("email", {
+              required: true,
+              pattern: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+            })}
+          />
           <input
             type={"password"}
             placeholder="input password"
-            {...register("password")}
+            {...register("password", { minLength: 4 })}
           />
-          <button type="submit">Login</button>
+          <button disabled={!isValid} type="submit">
+            Login
+          </button>
         </form>
       </div>
     </div>
