@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios';
+import { RootState } from '../../app/store';
 
 function Test(){
 
@@ -34,16 +35,18 @@ const initialState : PostState = {
 
 export const fetchPageAsync = createAsyncThunk(
   'post/fetchPage',
-  async (page: number) => {
+  async (page: number, thunkApi) => {
     /**
      * promise() 
      *  pending: dar entezar
      *  resolve: fulfilled
      *  fail:    rejected
      */    
+    const token = (thunkApi.getState() as RootState).auth.token
     return {
       response: await axios.get<PostItem[]>(
-        `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=10`
+        `http://localhost:3010/posts?_page=${page}&_limit=10`,
+        {headers: {'token': token}}
       ),
       page
     };
