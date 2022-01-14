@@ -1,9 +1,19 @@
 import { useForm } from "react-hook-form";
 import { Button, Input, Space } from "antd";
-import { useDispatch } from "react-redux";
-import { loginAsync } from "./authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { loginAsync, selectIsLoggedin } from "./authSlice";
 import { LoginModel } from "./LoginModel";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 export const Login = () => {
+  const navigate = useNavigate();
+  const isLoggedin = useSelector(selectIsLoggedin);
+  useEffect(() => {
+    if (isLoggedin) {
+      navigate("/");
+    }
+  }, [isLoggedin]);
+
   const dispatch = useDispatch();
   const {
     register,

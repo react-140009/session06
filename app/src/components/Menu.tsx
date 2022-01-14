@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { increment, selectCounter } from "../features/counter/counterSlice";
 import { selectIsLoggedin, logout } from "../features/auth/authSlice";
@@ -7,7 +7,14 @@ import { selectIsLoggedin, logout } from "../features/auth/authSlice";
 export function Menu() {
   const dispatch = useDispatch();
   const counter = useSelector(selectCounter);
+
+  const navigate = useNavigate();
   const isLoggedin = useSelector(selectIsLoggedin);
+  useEffect(() => {
+    if (!isLoggedin) {
+      navigate("/");
+    }
+  }, [isLoggedin]);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -60,11 +67,14 @@ export function Menu() {
                 Posts
               </Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/photos">
-                Photos
-              </Link>
-            </li>
+            {isLoggedin && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/photos">
+                  Photos
+                </Link>
+              </li>
+            )}
+
             <li className="nav-item">
               <Link className="nav-link" to="/about-us">
                 About us

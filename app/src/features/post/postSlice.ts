@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import axios from 'axios';
+import api from '../../app/api';
 import { RootState } from '../../app/store';
 
 function Test(){
@@ -44,9 +44,8 @@ export const fetchPageAsync = createAsyncThunk(
      */    
     const token = (thunkApi.getState() as RootState).auth.token
     return {
-      response: await axios.get<PostItem[]>(
-        `http://localhost:3010/posts?_page=${page}&_limit=10`,
-        {headers: {'token': token}}
+      response: await api.get<PostItem[]>(
+        `posts?_page=${page}&_limit=10`,        
       ),
       page
     };

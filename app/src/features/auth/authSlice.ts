@@ -21,7 +21,6 @@ export const loginAsync = createAsyncThunk(
     const response = await axios.post<{token: string}>(
       `http://localhost:3010/auth/login`, data
     );
-    
     return response.data;
   }
 )

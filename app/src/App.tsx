@@ -1,7 +1,13 @@
 import React, { useState, createContext, lazy, Suspense } from "react";
 import "./App.css";
 import "antd/dist/antd.css";
-import { Menu, ColorSelector, PhotoDetail, NotFound } from "./components";
+import {
+  Menu,
+  ColorSelector,
+  PhotoDetail,
+  NotFound,
+  ProtectedRoute,
+} from "./components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
