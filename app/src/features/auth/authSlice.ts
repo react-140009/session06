@@ -6,13 +6,13 @@ import { LoginModel } from "./LoginModel";
 
 
 export interface AuthState {
-  token: string;
+  token: string | null;
   isLoggedin: boolean;
 }
 
 const initialState : AuthState = {
-  token: "", // <- FIX,
-  isLoggedin: false // <- FIX,
+  token: localStorage.getItem('token'), 
+  isLoggedin: !!localStorage.getItem('token')
 }
 
 export const loginAsync = createAsyncThunk(
@@ -21,6 +21,7 @@ export const loginAsync = createAsyncThunk(
     const response = await axios.post<{token: string}>(
       `http://localhost:3010/auth/login`, data
     );
+    localStorage.setItem('token', response.data.token)    
     return response.data;
   }
 )
@@ -32,6 +33,7 @@ const authSlice = createSlice({
     logout: (state) => {
       state.isLoggedin = false;
       state.token = '';
+      localStorage.removeItem('token');
     }
   },
   extraReducers: (builder) => {
