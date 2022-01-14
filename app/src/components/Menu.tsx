@@ -2,11 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { increment, selectCounter } from "../features/counter/counterSlice";
-import { RootState } from "../app/store";
+import { selectIsLoggedin, logout } from "../features/auth/authSlice";
 
 export function Menu() {
   const dispatch = useDispatch();
   const counter = useSelector(selectCounter);
+  const isLoggedin = useSelector(selectIsLoggedin);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -70,9 +71,15 @@ export function Menu() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/auth/login">
-                Login
-              </Link>
+              {isLoggedin ? (
+                <a className="nav-link" onClick={() => dispatch(logout())}>
+                  logout
+                </a>
+              ) : (
+                <Link className="nav-link" to="/auth/login">
+                  Login
+                </Link>
+              )}
             </li>
           </ul>
         </div>
