@@ -1,16 +1,16 @@
 import { store } from './store';
-import axios from "axios"
+import axios, { AxiosRequestConfig } from "axios"
 
-let token = '';
-let tokenStorage = localStorage.getItem('token')
-
-if(tokenStorage){
-  token = tokenStorage;
-}
-
-export default axios.create({
-  headers: {
-    'token': token
-  },
+const api = axios.create({  
   baseURL: 'http://localhost:3010/'
 })
+
+api.interceptors.request.use(function (config) {
+  const token = store.getState().auth.token;
+  if(token && config.headers){
+    config.headers['token'] = token
+  }
+  return config;
+})
+
+export default api;
