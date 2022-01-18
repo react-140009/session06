@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios';
+import { history } from '../../app/history';
 import { RootState } from '../../app/store';
 import { LoginModel } from "./LoginModel";
 
@@ -34,6 +35,7 @@ const authSlice = createSlice({
       state.isLoggedin = false;
       state.token = '';
       localStorage.removeItem('token');
+      history.replace("/");
     }
   },
   extraReducers: (builder) => {
