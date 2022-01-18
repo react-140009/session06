@@ -12,6 +12,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
 import { Login } from "./features/auth/Login";
+import { BrowserRouter } from "./app/BrowserRouter";
+import { history } from "./app/history";
 
 //Code Split
 const TodoList = lazy(() => import("./components/TodoList"));
@@ -28,7 +30,7 @@ function App() {
     <div className="container">
       <Provider store={store}>
         <ColorContext.Provider value={[color, setColor] as any}>
-          <Router>
+          <BrowserRouter history={history}>
             <Menu />
             <Routes>
               <Route
@@ -78,7 +80,7 @@ function App() {
               <Route path="/404" element={<NotFound />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
-          </Router>
+          </BrowserRouter>
         </ColorContext.Provider>
       </Provider>
     </div>
