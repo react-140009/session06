@@ -1,0 +1,13 @@
+build:
+  yarn build
+
+
+IIS:
+  url-rewrite https://www.iis.net/downloads/microsoft/url-rewrite
+
+  web.config
+    https://stackoverflow.com/a/39968035/908464
+  
+Disable *.map files
+  .env (age nabood bayad ijad konid to folder asli)
+    GENERATE_SOURCEMAP=false
