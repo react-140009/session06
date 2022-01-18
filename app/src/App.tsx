@@ -14,6 +14,7 @@ import { Provider } from "react-redux";
 import { Login } from "./features/auth/Login";
 import { BrowserRouter } from "./app/BrowserRouter";
 import { history } from "./app/history";
+import { Category } from "./features/drug/Category";
 
 //Code Split
 const TodoList = lazy(() => import("./components/TodoList"));
@@ -76,6 +77,9 @@ function App() {
                 }
               />
               <Route path="/photos/:id" element={<PhotoDetail />} />
+
+              <Route path="/drugs/category" element={<Category />} />
+
               <Route path="/auth/login" element={<Login />} />
               <Route path="/404" element={<NotFound />} />
               <Route path="*" element={<NotFound />} />
